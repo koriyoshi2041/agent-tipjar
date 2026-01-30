@@ -47,7 +47,7 @@ Agent Tip Jar makes it dead simple:
 
 ### Option 1: Use the Hosted Version
 
-Visit [your-domain.com](https://your-domain.com) and create your tip jar in 30 seconds.
+Visit [agent-tipjar.vercel.app](https://agent-tipjar.vercel.app) and create your tip jar in 30 seconds.
 
 ### Option 2: Self-Host
 
@@ -109,7 +109,7 @@ Private Key: 0x4c0883a69102937d6231471b5dbb6204fe...
 ### Simple Link Button
 
 ```html
-<a href="https://your-domain.com/tip/your-agent?address=0x..." 
+<a href="https://agent-tipjar.vercel.app/tip/your-agent?address=0x..." 
    target="_blank"
    style="display:inline-block;padding:12px 24px;background:#0052FF;color:white;border-radius:8px;text-decoration:none;font-weight:600;">
   💰 Tip this Agent
@@ -121,7 +121,7 @@ Private Key: 0x4c0883a69102937d6231471b5dbb6204fe...
 ```html
 <!-- Auto-creates a button -->
 <script 
-  src="https://your-domain.com/embed.js"
+  src="https://agent-tipjar.vercel.app/embed.js"
   data-agent="my-agent"
   data-address="0x742d35Cc6634C0532925a3b844Bc9e7595f..."
   data-text="💰 Send a Tip"
@@ -135,7 +135,7 @@ Private Key: 0x4c0883a69102937d6231471b5dbb6204fe...
 ```html
 <div id="tip-container"></div>
 
-<script src="https://your-domain.com/embed.js"></script>
+<script src="https://agent-tipjar.vercel.app/embed.js"></script>
 <script>
   AgentTipJar.createButton({
     agent: 'my-agent',
