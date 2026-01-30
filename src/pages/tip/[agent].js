@@ -11,20 +11,48 @@ export default function TipPage() {
   const router = useRouter();
   const { agent, address } = router.query;
   
+  const [walletAddress, setWalletAddress] = useState(address || null);
   const [amount, setAmount] = useState('');
   const [balance, setBalance] = useState(null);
   const [copied, setCopied] = useState(false);
   const [txStatus, setTxStatus] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Fetch balance on load
+  // Generate wallet address from agent name if not provided
   useEffect(() => {
-    if (address) {
-      fetch(`/api/check-balance?address=${address}`)
+    // Wait for router to be ready
+    if (!router.isReady) return;
+    
+    if (agent && !address) {
+      fetch('/api/create-wallet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ agentName: agent })
+      })
+        .then(res => res.json())
+        .then(data => {
+          setWalletAddress(data.address);
+          setLoading(false);
+        })
+        .catch(err => {
+          console.error(err);
+          setLoading(false);
+        });
+    } else if (address) {
+      setWalletAddress(address);
+      setLoading(false);
+    }
+  }, [router.isReady, agent, address]);
+
+  // Fetch balance when wallet address is available
+  useEffect(() => {
+    if (walletAddress) {
+      fetch(`/api/check-balance?address=${walletAddress}`)
         .then(res => res.json())
         .then(data => setBalance(data))
         .catch(console.error);
     }
-  }, [address]);
+  }, [walletAddress]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(address);
@@ -96,7 +124,7 @@ export default function TipPage() {
       
       // Refresh balance after a delay
       setTimeout(() => {
-        fetch(`/api/check-balance?address=${address}`)
+        fetch(`/api/check-balance?address=${walletAddress}`)
           .then(res => res.json())
           .then(data => setBalance(data))
           .catch(console.error);
@@ -108,7 +136,7 @@ export default function TipPage() {
     }
   };
 
-  if (!address) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p>Loading...</p>
@@ -154,7 +182,7 @@ export default function TipPage() {
             {/* QR Code */}
             <div className="bg-white p-4 rounded-xl inline-block mb-4">
               <QRCodeSVG 
-                value={address} 
+                value={walletAddress} 
                 size={160}
                 level="H"
                 includeMargin={true}
@@ -166,7 +194,7 @@ export default function TipPage() {
               <p className="text-xs text-gray-500 mb-2">Wallet Address (Base Network)</p>
               <div className="flex items-center justify-center gap-2">
                 <code className="text-xs bg-gray-100 dark:bg-gray-800 px-3 py-2 rounded font-mono break-all">
-                  {address}
+                  {walletAddress}
                 </code>
                 <button
                   onClick={handleCopy}
@@ -176,7 +204,7 @@ export default function TipPage() {
                 </button>
               </div>
               <a 
-                href={`${BLOCK_EXPLORER}/address/${address}`}
+                href={`${BLOCK_EXPLORER}/address/${walletAddress}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-blue-600 hover:underline mt-2 inline-block"
