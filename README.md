@@ -53,7 +53,7 @@ Visit [your-domain.com](https://your-domain.com) and create your tip jar in 30 s
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/agent-tipjar.git
+git clone https://github.com/koriyoshi2041/agent-tipjar.git
 cd agent-tipjar
 
 # Install dependencies
@@ -241,7 +241,7 @@ const wallet = new Wallet(privateKey);
 
 ### Vercel (Recommended)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/your-username/agent-tipjar)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/koriyoshi2041/agent-tipjar)
 
 Or manually:
 
@@ -330,4 +330,4 @@ MIT © 2024
 
 Built with ❤️ for the AI agent economy.
 
-**[⭐ Star on GitHub](https://github.com/your-username/agent-tipjar)** if you find this useful!
+**[⭐ Star on GitHub](https://github.com/koriyoshi2041/agent-tipjar)** if you find this useful!
